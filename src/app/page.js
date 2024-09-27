@@ -34,40 +34,47 @@ const Section = ({ title, icon, children, className }) => (
 );
 
 const Header = () => (
-  <header className="bg-white bg-opacity-80 text-gray-800 p-6 md:p-10 rounded-lg shadow-lg mb-6">
-    <div className="flex flex-col md:flex-row items-center">
-      <img src="/images/profile_picture.jpg" alt="Puneet Bajaj" className="w-40 h-40 rounded-full mb-4 md:mb-0 md:mr-6 border-4 border-blue-500" />
-      <div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-2">Puneet Bajaj</h1>
-        <p className="text-xl md:text-2xl mb-4">Software Engineer</p>
-        <div className="flex flex-wrap gap-4 mb-4">
-          <a href="tel:4083269383" className="flex items-center hover:text-blue-600 transition-colors">
-            <Phone size={18} className="mr-2" /> (408) 326-9383
+  <header className="bg-white bg-opacity-80 text-gray-800 p-4 sm:p-6 md:p-10 rounded-lg shadow-lg mb-6">
+    <div className="flex flex-col items-center sm:items-start sm:flex-row">
+      <img 
+        src="/images/profile_picture.jpg" 
+        alt="Puneet Bajaj" 
+        className="w-32 h-32 sm:w-40 sm:h-40 rounded-full mb-4 sm:mb-0 sm:mr-6 border-4 border-blue-500"
+      />
+      <div className="text-center sm:text-left">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">Puneet Bajaj</h1>
+        <p className="text-lg sm:text-xl md:text-2xl mb-4">Software Engineer</p>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mb-4 justify-center sm:justify-start">
+          <a href="tel:4083269383" className="flex items-center justify-center sm:justify-start hover:text-blue-600 transition-colors">
+            <Phone size={16} className="mr-1" /> <span className="text-sm">(408) 326-9383</span>
           </a>
-          <a href="mailto:puneet.bajaj@sjsu.edu" className="flex items-center hover:text-blue-600 transition-colors">
-            <Mail size={18} className="mr-2" /> puneet.bajaj@sjsu.edu
+          <a href="mailto:puneet.bajaj@sjsu.edu" className="flex items-center justify-center sm:justify-start hover:text-blue-600 transition-colors">
+            <Mail size={16} className="mr-1" /> <span className="text-sm">puneet.bajaj@sjsu.edu</span>
           </a>
-          <span className="flex items-center">
-            <MapPin size={18} className="mr-2" /> San Jose, CA
+          <span className="flex items-center justify-center sm:justify-start">
+            <MapPin size={16} className="mr-1" /> <span className="text-sm">San Jose, CA</span>
           </span>
         </div>
-        <div className="flex space-x-4">
-          <a href="https://linkedin.com/in/puneet-bajaj-" target="_blank" rel="noopener noreferrer" 
-             className="bg-blue-600 text-white px-4 py-2 rounded-full flex items-center hover:bg-blue-700 transition-colors">
-            <Linkedin size={18} className="mr-2" /> LinkedIn
-          </a>
-          <a href="https://github.com/pb2323" target="_blank" rel="noopener noreferrer" 
-             className="bg-gray-800 text-white px-4 py-2 rounded-full flex items-center hover:bg-gray-900 transition-colors">
-            <Github size={18} className="mr-2" /> GitHub
-          </a>
-          <a href="https://drive.google.com/file/d/1MOtaftXt9wRZ0fc6tGXD6sybETJYIGvM/view?usp=sharing" target="_blank" rel="noopener noreferrer" 
-             className="bg-green-600 text-white px-4 py-2 rounded-full flex items-center hover:bg-green-700 transition-colors">
-            <FileText size={18} className="mr-2" /> Resume
-          </a>
+        <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4">
+          <HeaderButton href="https://linkedin.com/in/puneet-bajaj-" icon={<Linkedin size={16} />} text="LinkedIn" bgColor="bg-blue-600" hoverColor="hover:bg-blue-700" />
+          <HeaderButton href="https://github.com/pb2323" icon={<Github size={16} />} text="GitHub" bgColor="bg-gray-800" hoverColor="hover:bg-gray-900" />
+          <HeaderButton href="https://drive.google.com/file/d/1MOtaftXt9wRZ0fc6tGXD6sybETJYIGvM/view?usp=sharing" icon={<FileText size={16} />} text="Resume" bgColor="bg-green-600" hoverColor="hover:bg-green-700" />
         </div>
       </div>
     </div>
   </header>
+);
+
+const HeaderButton = ({ href, icon, text, bgColor, hoverColor }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className={`${bgColor} ${hoverColor} text-white px-3 py-2 rounded-full flex items-center justify-center transition-colors text-sm`}
+  >
+    {icon}
+    <span className="ml-1 hidden sm:inline">{text}</span>
+  </a>
 );
 
 
