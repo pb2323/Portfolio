@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Navbar } from '.';
 import { context } from '../App';
-import { c, download } from '../assets';
+import { download } from '../assets';
 import { Link } from 'react-router-dom';
 import { resumeLink } from '../constants';
 
@@ -24,7 +24,7 @@ const Resume = () => {
         window.open(directDownloadLink, '_blank');
     }
 
-    function extractFileIdFromLink(link) {
+    function extractFileIdFromLink(link: string): string | null {
         const match = link.match(/\/d\/(.+?)\/preview/);
         return match ? match[1] : null;
     }
