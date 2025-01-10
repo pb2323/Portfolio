@@ -38,6 +38,9 @@ import cockroach from './tech/cockroach.png';
 import kubernetes from './tech/kubernetes.png';
 import graphql from './tech/graphql.png';
 import elasticsearch from './tech/elasticsearch.png';
+import prometheus from './tech/prometheus.png';
+import keycloak from './tech/keycloak.svg';
+import fastapi from './tech/fastapi.png';
 
 import leetcodeLight from './social/leetcodeLight.svg';
 import leetcodeDark from './social/leetcodeDark.svg';
@@ -55,6 +58,7 @@ import linkedList from './projects/LinkedList.jpg';
 import binaryTrees from './projects/BinaryTrees.jpg';
 import dsakit from './projects/dsakit.png';
 import networkin from './projects/network-in.jpeg';
+import devquest from './projects/devquest.png';
 
 export {
   logo,
@@ -109,5 +113,9 @@ export {
   kubernetes,
   graphql,
   elasticsearch,
-  networkin
+  networkin,
+  prometheus,
+  keycloak,
+  fastapi,
+  devquest
 };

@@ -23,13 +23,20 @@ const Projects = () => {
                                 </a>
                             </header>
                             <p className={`${isLight ? "text-secondary-text-light" : "text-secondary-dark" } px-2 md:p-2 text-sm md:text-base max-w-1/2 leading-[30px]`}>{project.description}</p>
-                            <div className="flex items-center justify-center md:justify-end gap-3">
+                            {project.bulletPoints && project.bulletPoints.length > 0 && <ul className={`${isLight ? "text-secondary-text-light" : "text-secondary-dark"} px-2 md:p-2 text-sm md:text-base max-w-1/2 leading-[30px]`}>
+                                {project.bulletPoints?.map((item, i) => (
+                                <li key={i}>{item}</li>
+                                ))}
+                            </ul>}
+                            <div className="flex flex-wrap items-center justify-center md:justify-center gap-3">
                                 {project.stack.map((tech, techIndex) => (
                                     <img key={techIndex} src={tech} alt={"tech" + {techIndex}} className="w-7 h-7 md:w-10 md:h-10"/>
                                 ))}
                             </div>
                         </div>
-                        <img src={project.media} alt={project.title + ' Media'} className={`md:w-1/3 rounded-xl border-2 ${isLight ? "border-black" : "border-white"} `} />
+                        <img src={project.media} alt={project.title + ' Media'}
+                        //  style={{maxHeight: '300px'}} 
+                         className={`md:w-1/3 rounded-xl border-2 ${isLight ? "border-black" : "border-white"} `} />
                     </div>
                 ))}
             </div>
