@@ -1,67 +1,134 @@
-import { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { styles } from '../styles';
-import { logo, menu, close } from '../assets';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { context } from '../App';
 
+const links = [
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Wins', href: '#wins' },
+  { label: 'Stack', href: '#stack' },
+];
+
 const Navbar = () => {
-	const [active, setActive] = useState("");
-	const [toggle, setToggle] = useState(false);
-	const { isLight, setIsLight } = useContext(context);
-    const navLinks = ["About", "Skills", "Projects"];
+  const { isLight, setIsLight } = useContext(context);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-	const navigate = useNavigate();
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-	return (
-		<nav className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 ${ isLight ? "bg-white" : "bg-black" } bg-opacity-60 backdrop-blur`}>
-			<div className='w-full flex justify-between items-center mx-auto'>
-				<Link to='/' className='flex items-center gap-2'
-					onClick={() => {
-						setActive("");
-						window.scrollTo(0, 0);
-					}}>
-					<img src={logo} alt="logo" className='w-9 h-9 object-contain'/>
-					<p className={`${isLight ? "text-black-100" : "text-white-100"} text-[18px] font-bold cursor-pointer`}>Puneet Bajaj</p>
-				</Link>
-				<button onClick={() => setIsLight(!isLight)} className='text-sm ml-4 md:ml-0 md:text-xl flex border-black border-2 rounded-full bg-gray-500'>
-					<div className={`bg-yellow-200 rounded-full p-1 ${!isLight ? 'invisible': null}`}>🌞</div>
-					<div className={`bg-gray-700 rounded-full p-1 none ${isLight ? 'invisible': null}`}>🌚</div>
-				</button>
-				
-				<ul className='list-none hidden sm:flex flex-row gap-10 justify-center items-center'>
-					{navLinks.map((link, linkIdx) => (
-						<li key={linkIdx} className={`${active === link && isLight ? `text-secondary-light`: active === link ? `text-secondary-dark`: isLight ? `text-black-100`: `text-white-100`} hover:opacity-75 text-[18px] font-medium cursor-pointer`}
-							onClick={() => {
-								if (window.location.pathname !== '/') 
-            						navigate('/');
-								setActive(link);
-							}}>
-							<a href={`#${link.toLowerCase()}`}>{link}</a>
-						</li>
-					))}
-				</ul>
-				<div className='sm:hidden flex flex-1 justify-end items-center'>
-					<img src={toggle ? close: menu } alt="menu" className={`${isLight ? "": "invert"} w-[28px] h-[28px] object-contain cursor-pointer`}
-					onClick={() => setToggle(!toggle)}/>
-					<div className={`${toggle ? "flex": "hidden"} p-6 ${isLight ? "white-gradient" : "black-gradient"} absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}>
-						<ul className='list-none flex items-start flex-col gap-4 w-full'>
-							{navLinks.map((link, linkIdx) => (
-								<li key={linkIdx} className={`${active === link && isLight ? `text-secondary-light`: active === link ? `text-secondary-dark`: isLight ? `text-black-100`: `text-white-100`} font-poppins font-medium cursor-pointer w-full`}
-									onClick={() => {
-										setToggle(false);
-										if (window.location.pathname !== '/') 
-            								navigate('/');
-										setActive(link);
-									}}>
-									<a href={`#${link.toLowerCase()}`} className='flex w-full'>{link}</a>
-								</li>
-							))}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
- 	)
-}
+  const goTo = (href: string) => {
+    setOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }, 80);
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'glass border-b'
+          : 'bg-transparent border-transparent'
+      }`}
+      style={{ borderColor: scrolled ? 'var(--border)' : 'transparent' }}
+    >
+      <nav className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+        <Link
+          to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center gap-2.5"
+        >
+          <div className="relative w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
+               style={{ background: 'linear-gradient(135deg,#7c5cff 0%,#22d3ee 100%)' }}>
+            <span className="font-mono font-bold text-white text-sm">pb</span>
+          </div>
+          <span className="font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+            Puneet Bajaj
+          </span>
+        </Link>
+
+        <ul className="hidden md:flex items-center gap-1">
+          {links.map((l) => (
+            <li key={l.href}>
+              <button
+                onClick={() => goTo(l.href)}
+                className="px-3 py-1.5 rounded-full text-sm font-medium hover:bg-[var(--surface-2)] transition-colors"
+                style={{ color: 'var(--muted)' }}
+              >
+                {l.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <button
+            aria-label="Toggle theme"
+            onClick={() => setIsLight(!isLight)}
+            className="w-9 h-9 rounded-full surface lift flex items-center justify-center"
+            style={{ color: 'var(--text)' }}
+          >
+            {isLight ? <Moon size={16} /> : <Sun size={16} />}
+          </button>
+          <Link
+            to="/resume"
+            className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-white"
+            style={{ background: 'linear-gradient(135deg,#7c5cff 0%,#5a3df0 100%)' }}
+          >
+            Resume
+          </Link>
+          <button
+            className="md:hidden w-9 h-9 rounded-full surface flex items-center justify-center"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+            style={{ color: 'var(--text)' }}
+          >
+            {open ? <X size={16} /> : <Menu size={16} />}
+          </button>
+        </div>
+      </nav>
+
+      {open && (
+        <div className="md:hidden glass border-t" style={{ borderColor: 'var(--border)' }}>
+          <ul className="flex flex-col p-3 gap-1">
+            {links.map((l) => (
+              <li key={l.href}>
+                <button
+                  onClick={() => goTo(l.href)}
+                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-[var(--surface-2)] text-sm font-medium"
+                  style={{ color: 'var(--text)' }}
+                >
+                  {l.label}
+                </button>
+              </li>
+            ))}
+            <Link
+              to="/resume"
+              onClick={() => setOpen(false)}
+              className="mx-1 mt-1 px-4 py-2 rounded-lg text-sm font-medium text-white text-center"
+              style={{ background: 'linear-gradient(135deg,#7c5cff 0%,#5a3df0 100%)' }}
+            >
+              Resume
+            </Link>
+          </ul>
+        </div>
+      )}
+    </header>
+  );
+};
 
 export default Navbar;

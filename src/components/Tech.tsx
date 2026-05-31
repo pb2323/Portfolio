@@ -1,49 +1,58 @@
-import { useContext } from 'react';
-import { context } from '../App';
-import { styles } from "../styles";
-import { languages, frameworks, databases, tools } from '../constants';
-import './bounce.css';
+import { motion } from 'framer-motion';
+import { techStack } from '../constants';
 
 const Tech = () => {
-    const { isLight } = useContext(context);
+  return (
+    <section id="stack" className="relative max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-32">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6 }}
+        className="mb-14"
+      >
+        <div className="eyebrow mb-3">Stack</div>
+        <h2 className="text-3xl sm:text-5xl font-black tracking-tight" style={{ color: 'var(--text)' }}>
+          The tools I reach for.
+        </h2>
+      </motion.div>
 
-    return (
-        <div id="skills" className={`mt-4 ${styles.paddingX} max-w-7xl mx-auto flex flex-col items-start justify-between`}>
-            <p className={`${styles.sectionSubText} ${isLight ? "text-black-200" : "text-white-100" } mt-10 font-semibold`}>My Skills</p><h2 className={`${styles.sectionHeadText} ${isLight ? "text-black-100" : "text-white-100"}`}>Tech Stack.</h2>
-            <p className={`${styles.sectionSubText} ${isLight ? "text-black-100" : "text-white-100"} font-semibold mt-4`}>Technical Languages</p>
-            <div className='flex flex-row flex-wrap justify-center gap-6 md:gap-16 my-10 w-full'>
-                {languages.map((language, index) => (
-                    <div key={index} className={`sphere ${isLight ? "mud-gradient" : "invert"} flex items-center justify-center rounded-full p-4`}>
-                        <img title={language.title} src={language.icon} alt={language.title} className={`${!isLight && !language.invert ? "invert" : ""} hover:animate-spin w-12 h-12 md:w-20 md:h-20 object-contain`} />
-                    </div>
-                ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        {techStack.map((cat, i) => (
+          <motion.div
+            key={cat.category}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: i * 0.04 }}
+            className="surface rounded-2xl p-5 sm:p-6 lift"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="eyebrow">{cat.category}</div>
+              <span className="font-mono text-[11px]" style={{ color: 'var(--muted)' }}>
+                {cat.items.length}
+              </span>
             </div>
-            <p className={`${styles.sectionSubText} ${isLight ? "text-black-100" : "text-white-100"} font-semibold mt-4`}>Technologies and Frameworks</p>
-            <div className='flex flex-row flex-wrap justify-center gap-6 md:gap-16 my-10 w-full'>
-                {frameworks.map((framework, index) => (
-                    <div key={index} className={`sphere ${isLight ? "mud-gradient" : "invert"} flex items-center justify-center rounded-full p-4`}>
-                        <img title={framework.title} src={framework.icon} alt={framework.title} className={`${!isLight && !framework.invert ? "invert" : ""} hover:animate-spin w-12 h-12 md:w-20 md:h-20 object-contain`}  />
-                    </div>
-                ))}
+            <div className="flex flex-wrap gap-1.5">
+              {cat.items.map((item) => (
+                <span
+                  key={item}
+                  className="text-xs sm:text-[13px] px-2.5 py-1.5 rounded-lg font-medium"
+                  style={{
+                    background: 'var(--surface-2)',
+                    color: 'var(--text)',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  {item}
+                </span>
+              ))}
             </div>
-            <p className={`${styles.sectionSubText} ${isLight ? "text-black-100" : "text-white-100"} font-semibold mt-4`}>Databases</p>
-            <div className='flex flex-row flex-wrap justify-center gap-6 md:gap-16 my-10 w-full'>
-                {databases.map((database, index) => (
-                    <div key={index} className={`sphere ${isLight ? "mud-gradient" : "invert"} flex items-center justify-center rounded-full p-4`}>
-                        <img title={database.title} src={database.icon} alt={database.title} className={`${!isLight && !database.invert ? "invert" : ""} hover:animate-spin w-12 h-12 md:w-20 md:h-20 object-contain`} />
-                    </div>
-                ))}
-            </div>
-            <p className={`${styles.sectionSubText} ${isLight ? "text-black-100" : "text-white-100"} font-semibold mt-4`}>Tools</p>
-            <div className='flex flex-row flex-wrap justify-center gap-6 md:gap-16 my-10 w-full'>
-                {tools.map((tool, index) => (
-                    <div key={index} className={`sphere ${isLight ? "mud-gradient" : "invert"} flex items-center justify-center rounded-full p-4`}>
-                        <img title={tool.title} src={tool.icon} alt={tool.title} className={`${!isLight && !tool.invert ? "invert" : ""} hover:animate-spin w-12 h-12 md:w-20 md:h-20 object-contain`} />
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
-}
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default Tech;
