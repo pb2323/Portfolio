@@ -1,37 +1,160 @@
-import { useContext } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { styles } from '../styles';
-import { context } from '../App';
-import { comp, leetcodeLight, leetcodeDark, linkedin, github, gmail } from '../assets';
-import { Typewriter } from 'react-simple-typewriter';
+import { ArrowUpRight, Mail, FileText, MapPin, Command } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from './BrandIcons';
+import { hero, stats, socials } from '../constants';
+import CountUp from './CountUp';
 
 const Hero = () => {
-    const { isLight } = useContext(context);
+  return (
+    <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      <div className="aurora" />
+      <div className="absolute inset-0 grid-pattern" />
 
-    return (
-        <div className={`z-0 ${isLight ? "bg-hero-pattern-light" : "bg-hero-pattern-dark"} bg-cover bg-no-repeat bg-center`} >
-			<div className={`absolute inset-0 bg-gradient-to-b from-transparent from-60% ${isLight ? "to-white" : "to-black"}`}></div>
-			<section className={`relative shrink-0 w-full h-screen mx-auto ${styles.paddingX} pt-[120px] max-w-7xl mx-auto flex items-start justify-between`}>
-				<div className='flex flex-col md:flex-row justify-between items-center mt-5 gap-3'>
-					<div className='flex flex-col gap-3 md:gap-5'>
-						<h1 className={`${styles.heroHeadText} ${isLight ? "text-black-100" : "text-white-100"}`}>Hi, I am <span className="text-[#2548e3]">Puneet.</span></h1>
-						<div className='flex gap-5 md:gap-7 justify-start items-center'>
-							<Link to="/resume" className={`${isLight ? "bg-black-200 text-white-100" : "bg-white-100 text-black-200"} hover:scale-105 text-xs md:text-lg font-semibold p-3 rounded-xl`}>My Resume</Link>
-							<a href='https://leetcode.com/u/pbajaj0023' target='__blank'><img src={isLight ? leetcodeLight : leetcodeDark} alt="leetcode" className='w-7 md:w-10 hover:scale-105' /></a>
-							<a href='https://www.linkedin.com/in/puneet-bajaj-' target='__blank'><img src={linkedin} alt="linkedin" className='w-7 md:w-10 hover:scale-105' /></a>
-							<a href='https://github.com/pb2323' target='__blank'><img src={github} alt="github" className={`${isLight ? '' : "invert"} w-7 md:w-10 hover:scale-105`} /></a>
-							<a href='mailto:pbajaj0023@gmail.com' target='__blank'><img src={gmail} alt="gmail" className='w-7 md:w-10 hover:scale-105' /></a>
-						</div>
-						<p className={`${styles.heroSubText} ${isLight ? "text-black-200" : "text-white-100"} mt-2`}>I am a 
-						<span className='text-secondary-light'>
-							<Typewriter words={[' Full Stack Developer.', ' Software Engineer.', ' LeetCode enthusiast.', ' Blockchain enthusiast.']} loop={0} cursor cursorStyle='_' typeSpeed={70} deleteSpeed={50} delaySpeed={1000} />
-						</span></p>
-					</div>
-					<img src={comp} alt="Working Man" className='pointer-events-none' />
-				</div>
-			</section>
-		</div>
-    )
-}
+      <div className="relative max-w-6xl mx-auto w-full px-5 sm:px-8 pt-28 pb-16 z-10">
+        {/* Status pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full surface text-xs sm:text-sm font-mono"
+          style={{ color: 'var(--muted)' }}
+        >
+          <span className="live-dot" />
+          <span>
+            <span style={{ color: 'var(--text)' }}>{hero.title}</span>
+            {' @ '}
+            <span style={{ color: 'var(--text)' }}>{hero.company}</span>
+            {' · Acrobat Web'}
+          </span>
+        </motion.div>
+
+        {/* Headline — proof-led */}
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mt-6 text-[clamp(2.4rem,7.5vw,5.8rem)] leading-[1.0] font-black tracking-tight"
+          style={{ color: 'var(--text)' }}
+        >
+          Hi, I'm Puneet.
+          <br />
+          I build with <span className="text-gradient">AI agents.</span>
+        </motion.h1>
+
+        {/* Subhead */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.16 }}
+          className="mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed"
+          style={{ color: 'var(--muted)' }}
+        >
+          Software engineer at <span style={{ color: 'var(--text)' }} className="font-medium">Adobe</span> building production AI on Acrobat Web. Multi-agent systems, MCP servers, multimodal interfaces, and the platforms that make them safe.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.24 }}
+          className="mt-8 flex flex-wrap items-center gap-3"
+        >
+          <a
+            href={`mailto:${socials.email}`}
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm sm:text-base font-medium text-white"
+            style={{ background: 'linear-gradient(135deg,#7c5cff 0%,#5a3df0 100%)' }}
+          >
+            Get in touch
+            <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <Link
+            to="/resume"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm sm:text-base font-medium surface lift"
+            style={{ color: 'var(--text)' }}
+          >
+            <FileText size={16} />
+            Resume
+          </Link>
+          <div className="flex items-center gap-1 ml-1">
+            <a
+              href={socials.github}
+              target="_blank" rel="noreferrer"
+              aria-label="GitHub"
+              className="w-10 h-10 rounded-full surface lift flex items-center justify-center"
+              style={{ color: 'var(--text)' }}
+            >
+              <GithubIcon width={16} height={16} />
+            </a>
+            <a
+              href={socials.linkedin}
+              target="_blank" rel="noreferrer"
+              aria-label="LinkedIn"
+              className="w-10 h-10 rounded-full surface lift flex items-center justify-center"
+              style={{ color: 'var(--text)' }}
+            >
+              <LinkedinIcon width={16} height={16} />
+            </a>
+            <a
+              href={`mailto:${socials.email}`}
+              aria-label="Email"
+              className="w-10 h-10 rounded-full surface lift flex items-center justify-center"
+              style={{ color: 'var(--text)' }}
+            >
+              <Mail size={16} />
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Meta strip — location + cmd-k hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.32 }}
+          className="mt-8 flex flex-wrap items-center gap-4 font-mono text-xs"
+          style={{ color: 'var(--muted)' }}
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin size={12} />
+            {hero.location}
+          </span>
+          <span className="hidden sm:inline-flex items-center gap-1.5">
+            Press{' '}
+            <kbd
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded"
+              style={{ background: 'var(--surface-2)', color: 'var(--text)', border: '1px solid var(--border)' }}
+            >
+              <Command size={10} /> K
+            </kbd>{' '}
+            anywhere
+          </span>
+        </motion.div>
+
+        {/* Stat strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden surface"
+        >
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="px-5 py-6 sm:py-7"
+              style={{ background: 'var(--surface)' }}
+            >
+              <div className="text-3xl sm:text-5xl font-black tracking-tight" style={{ color: 'var(--text)' }}>
+                <CountUp value={s.value} />
+              </div>
+              <div className="mt-2 font-mono text-[11px] uppercase tracking-wider" style={{ color: 'var(--muted)' }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 export default Hero;

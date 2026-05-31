@@ -1,47 +1,50 @@
-import { useContext, useEffect } from 'react';
-import { Navbar } from '.';
-import { context } from '../App';
-import { download } from '../assets';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Download, ArrowLeft } from 'lucide-react';
+import { Navbar } from '.';
 import { resumeLink } from '../constants';
 
 const Resume = () => {
-    const { isLight } = useContext(context);
-    
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    function downloadResume() {
-        const fileId = extractFileIdFromLink(resumeLink);
-        if (!fileId) {
-            console.error('Invalid Google Drive link');
-            return;
-        }
-        const directDownloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
-        
-        // Open the download link in a new tab
-        window.open(directDownloadLink, '_blank');
-    }
+  return (
+    <div className="relative min-h-screen" style={{ background: 'var(--bg)' }}>
+      <div className="aurora" />
+      <div className="absolute inset-0 grid-pattern" />
+      <Navbar />
 
-    function extractFileIdFromLink(link: string): string | null {
-        const match = link.match(/\/d\/(.+?)\/preview/);
-        return match ? match[1] : null;
-    }
-
-    return (
-        <div className={`${ isLight ? "bg-hero-pattern-light" : "bg-hero-pattern-dark" } bg-cover bg-no-repeat bg-center flex flex-col justify-center items-center min-h-screen md:h-full`}>
-            <Navbar />
-            <div className='relative mt-24'>
-                <iframe className='w-[355px] h-[500px] md:w-[826px] md:h-[1160px] rounded-xl' src={resumeLink}></iframe>
-                <img src={download} alt="download" onClick={downloadResume} className="w-10 h-10 md:w-12 md:h-12 bg-[#404040] hover:cursor-pointer hover:bg-[#474847] absolute top-2 left-2 text-xs md:text-lg font-semibold p-3 rounded-xl" />
-            </div>
-            <div className='w-[355px] md:w-[826px] flex justify-evenly items-center'>
-                <Link to="/" className={`${isLight ? "bg-black-200 text-white-100 hover:text-secondary-dark " : "bg-white-100 text-black-200 hover:text-secondary-light"} my-5 text-xs md:text-lg font-semibold p-3 rounded-xl`}>Back</Link>
-                <button onClick={downloadResume} className={`${isLight ? "bg-black-200 text-white-100 hover:text-secondary-dark " : "bg-white-100 text-black-200 hover:text-secondary-light"} my-5 text-xs md:text-lg font-semibold p-3 rounded-xl`}>Download</button>
-            </div>
+      <main className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 pt-28 pb-16 flex flex-col items-center">
+        <div className="w-full flex items-center justify-between mb-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm surface lift"
+            style={{ color: 'var(--text)' }}
+          >
+            <ArrowLeft size={14} /> Back
+          </Link>
+          <a
+            href={resumeLink}
+            download
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white"
+            style={{ background: 'linear-gradient(135deg,#7c5cff 0%,#5a3df0 100%)' }}
+          >
+            <Download size={14} /> Download PDF
+          </a>
         </div>
-    )
-}
 
-export default Resume
+        <div className="w-full surface rounded-2xl overflow-hidden">
+          <iframe
+            title="Puneet Bajaj Resume"
+            src={resumeLink}
+            className="w-full h-[80vh] sm:h-[110vh]"
+            style={{ border: 'none', background: 'white' }}
+          />
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Resume;

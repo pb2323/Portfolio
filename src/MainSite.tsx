@@ -1,21 +1,20 @@
-import { useContext } from 'react';
-import { Navbar, Hero, About, Tech, Footer, Projects } from './components';
-import { context } from './App';
+import { Navbar, Hero, About, Experience, Projects, Achievements, Tech, Footer } from './components';
+import CommandPalette from './components/CommandPalette';
 
 const MainSite = () => {
-    const { isLight } = useContext(context);
-
-    return (
-        <div className={`${isLight ? "bg-white selection:text-white selection:bg-[#2B3467]" : "bg-black selection:text-black-200 selection:bg-[#E78EA9]"}`}>
-            <Navbar />
-            <Hero />
-            <About />
-            <Tech />
-            {/* <Websites /> */}
-            <Projects />
-            <Footer />
-        </div>
-    )
-}
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
+      <Navbar />
+      <Hero />
+      <About />
+      <Experience />
+      <Projects />
+      <Achievements />
+      <Tech />
+      <Footer />
+      <CommandPalette />
+    </div>
+  );
+};
 
 export default MainSite;
